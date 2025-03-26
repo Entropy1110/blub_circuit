@@ -41,6 +41,6 @@ d. verification_key.json export
 
 #### verifier.sol 생성 방법
 
-    `snarkjs zkey export solidityverifier ../build/circuit.zkey ../build/verifier.sol`
+`snarkjs zkey export solidityverifier ../build/circuit.zkey ../build/verifier.sol`
 
-    → `circuit.zkey`를 통해 `verifier.sol` 자동으로 생성
+→ `circuit.zkey`를 통해 `verifier.sol` 자동으로 생성
