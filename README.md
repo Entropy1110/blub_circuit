@@ -1,3 +1,4 @@
+### Quick Start
 `cd blub_circuit/build/main_js`
 
 `node generate_input.js`
