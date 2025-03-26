@@ -21,7 +21,7 @@
 
 ### ETC
 
-1. main.circuit이 바뀌었을 때 zkey &  verification_key.json 생성 방법
+#### main.circuit이 바뀌었을 때 zkey &  verification_key.json 생성 방법
 
 a. circuit 컴파일 후, r1cs 생성
 
@@ -39,7 +39,7 @@ d. verification_key.json export
 
 `snarkjs zkey export verificationkey ../build/circuit.zkey ../build/verification_key.json`
 
-2. verifier.sol 생성 방법
+#### verifier.sol 생성 방법
 
     `snarkjs zkey export solidityverifier ../build/circuit.zkey ../build/verifier.sol`
 
