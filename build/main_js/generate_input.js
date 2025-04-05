@@ -1,27 +1,30 @@
 const circomlib = require("circomlibjs");
-const { Scalar } = require("ffjavascript");
 const fs = require("fs");
+const path = require("path");
 
 (async () => {
-    // 1. Poseidon 해시 함수 초기화
+    // 1. Poseidon 해시 초기화
     const poseidon = await circomlib.buildPoseidon();
     const F = poseidon.F;
 
-    // 2. 입력 값 설정 (숫자형 또는 BigInt)
+    // 2. 입력 값 설정
     const sk_user = BigInt("123456789");
     const deviceId = BigInt("987654321");
-    const commandHash = BigInt("444444444");
     const nonce = BigInt("111");
 
-    // 3. authNullifier = Poseidon(sk_user, deviceId)
+    // 3. commandHash.txt 파일에서 hash 값 읽기
+    const commandHashStr = fs.readFileSync("./gen_cmd/commandHash.txt", "utf-8").trim();
+    const commandHash = BigInt(commandHashStr);
+
+    // 4. authNullifier = Poseidon(sk_user, deviceId)
     const authNullifier = poseidon([sk_user, deviceId]);
     const authNullifierHex = F.toString(authNullifier);
 
-    // 4. cmdNullifier = Poseidon(authNullifier, commandHash, nonce)
+    // 5. cmdNullifier = Poseidon(authNullifier, commandHash, nonce)
     const cmdNullifier = poseidon([authNullifier, commandHash, nonce]);
     const cmdNullifierHex = F.toString(cmdNullifier);
 
-    // 5. input.json 생성
+    // 6. input.json 생성
     const input = {
         sk_user: sk_user.toString(),
         nonce: nonce.toString(),
@@ -31,7 +34,6 @@ const fs = require("fs");
         predictedCmdNullifier: cmdNullifierHex
     };
 
-    fs.writeFileSync("input.json", JSON.stringify(input, null, 2));
-    console.log("✅ input.json 생성 완료!");
+    fs.writeFileSync("./gen_circuit_input/input.json", JSON.stringify(input, null, 2));
+    console.log("✅ ./gen_circuit_input/input.json 생성 완료!");
 })();
-
