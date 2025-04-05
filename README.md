@@ -1,9 +1,13 @@
 ### Quick Start
 `cd blub_circuit/build/main_js`
 
+`node generate_command.js`
+
+→ command.json, commandHash.txt, encrypted_command.bin 생성
+
 `node generate_input.js`
 
-→ example input 생성
+→ example circom input 생성
 
 `node generate_witness.js main.wasm input.json witness.wtns`
 
