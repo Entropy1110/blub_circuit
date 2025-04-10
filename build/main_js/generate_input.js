@@ -13,7 +13,7 @@ const path = require("path");
     const nonce = BigInt("111");
 
     // 3. commandHash.txt 파일에서 hash 값 읽기
-    const commandHashStr = fs.readFileSync("./gen_cmd/commandHash.txt", "utf-8").trim();
+    const commandHashStr = fs.readFileSync("./gen_cmd/encrypted_command.bin");
     const commandHash = BigInt(commandHashStr);
 
     // 4. authNullifier = Poseidon(sk_user, deviceId)
