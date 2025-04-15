@@ -1,7 +1,7 @@
 1,1,141,main.authVerificationOut
 2,2,141,main.cmdVerificationOut
 3,3,141,main.deviceId
-4,4,141,main.commandHash
+4,4,141,main.encryptedCmd
 5,5,141,main.predictedAuthNullifier
 6,6,141,main.predictedCmdNullifier
 7,7,141,main.sk_user
