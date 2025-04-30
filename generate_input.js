@@ -20,12 +20,16 @@ const path = require("path");
     // hex 문자열을 BigInt로 변환
     const encryptedCmd = BigInt("0x" + hexString);
 
+    const encryptedCmdHash = poseidon([encryptedCmd]);
+    const encryptedCmdHashHex = F.toString(encryptedCmdHash);
+
+
     // 4. authNullifier = Poseidon(sk_user, deviceId)
     const authNullifier = poseidon([sk_user, deviceId]);
     const authNullifierHex = F.toString(authNullifier);
 
     // 5. cmdNullifier = Poseidon(authNullifier, commandHash, nonce)
-    const cmdNullifier = poseidon([authNullifier, encryptedCmd, nonce]);
+    const cmdNullifier = poseidon([authNullifier, encryptedCmdHash, nonce]);
     const cmdNullifierHex = F.toString(cmdNullifier);
 
     // 6. input.json 생성
@@ -33,11 +37,12 @@ const path = require("path");
         sk_user: sk_user.toString(),
         nonce: nonce.toString(),
         deviceId: deviceId.toString(),
-        encryptedCmd: encryptedCmd.toString(),
+        encryptedCmdHash: encryptedCmdHashHex,
         predictedAuthNullifier: authNullifierHex,
         predictedCmdNullifier: cmdNullifierHex
     };
     fs.mkdirSync("./gen_circuit_input", { recursive: true });
     fs.writeFileSync("./gen_circuit_input/input.json", JSON.stringify(input, null, 2));
     console.log("✅ ./gen_circuit_input/input.json 생성 완료!");
+    console.log(encryptedCmdHashHex)
 })();

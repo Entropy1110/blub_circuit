@@ -11,7 +11,7 @@ template CommandNullifierCircuit() {
 
     // Public inputs
     signal input deviceId;
-    signal input encryptedCmd;
+    signal input encryptedCmdHash;
     signal input predictedAuthNullifier;
     signal input predictedCmdNullifier;
 
@@ -20,10 +20,10 @@ template CommandNullifierCircuit() {
     poseidonAuth.inputs[0] <== sk_user;
     poseidonAuth.inputs[1] <== deviceId;
 
-    // Cmd Nullifier = Poseidon(authNullifier, encryptedCmd, nonce)
+    // Cmd Nullifier = Poseidon(authNullifier, encryptedCmdHash, nonce)
     component poseidonCmd = Poseidon(3);
     poseidonCmd.inputs[0] <== poseidonAuth.out;
-    poseidonCmd.inputs[1] <== encryptedCmd;
+    poseidonCmd.inputs[1] <== encryptedCmdHash;
     poseidonCmd.inputs[2] <== nonce;
 
     // authNullifier 검증
@@ -42,4 +42,4 @@ template CommandNullifierCircuit() {
     cmdVerificationOut <== isZeroCmd.out;
 }
 
-component main {public [deviceId, encryptedCmd, predictedAuthNullifier, predictedCmdNullifier]} = CommandNullifierCircuit();
+component main {public [deviceId, encryptedCmdHash, predictedAuthNullifier, predictedCmdNullifier]} = CommandNullifierCircuit();
